@@ -1,39 +1,50 @@
 pipeline {
-    agent { label "dev-server"}
-    
+    agent any
+
+    environment {
+        TAG_NAME = 'theshubhamgour/node'                 // Tag Name
+        APP_VERSION = 'nodeapp-master-v1.0.0'            // Version
+        DOCKER_REPO = "${TAG_NAME}"                      // Docker Repo
+        DOCKER_TAG = "${APP_VERSION}"                    // Docker Tag
+        DOCKERHUB_CREDENTIALS = credentials('DOCKERHUB_CREDENTIALS') // Replace with your Jenkins credential ID
+    }
+
     stages {
-        
-        stage("code"){
-            steps{
-                git url: "https://github.com/LondheShubham153/node-todo-cicd.git", branch: "master"
-                echo 'bhaiyya code clone ho gaya'
+        // stage('Cloning Repository') {
+        //     steps {
+        //         git 'https://github.com/theshubhamgour/node-todo-cicd.git'
+        //     }
+        // }
+
+        stage('Build') {
+            steps {
+                sh 'docker build -t nodeapplication .'
             }
         }
-        stage("build and test"){
-            steps{
-                sh "docker build -t node-app-test-new ."
-                echo 'code build bhi ho gaya'
+
+        stage('Testing') {
+            steps {
+                echo 'Testing Success'
             }
         }
-        stage("scan image"){
-            steps{
-                echo 'image scanning ho gayi'
-            }
-        }
-        stage("push"){
-            steps{
-                withCredentials([usernamePassword(credentialsId:"dockerHub",passwordVariable:"dockerHubPass",usernameVariable:"dockerHubUser")]){
-                sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
-                sh "docker tag node-app-test-new:latest ${env.dockerHubUser}/node-app-test-new:latest"
-                sh "docker push ${env.dockerHubUser}/node-app-test-new:latest"
-                echo 'image push ho gaya'
+
+        stage('Docker Login') {
+            steps {
+                script {
+                    sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
                 }
             }
         }
-        stage("deploy"){
-            steps{
-                sh "docker-compose down && docker-compose up -d"
-                echo 'deployment ho gayi'
+
+        stage('Docker Tag Image') {
+            steps {
+                sh "docker tag nodeapplication ${DOCKER_REPO}:${DOCKER_TAG}"
+            }
+        }
+
+        stage('Docker Push') {
+            steps {
+                sh "docker push ${DOCKER_REPO}:${DOCKER_TAG}"
             }
         }
     }
