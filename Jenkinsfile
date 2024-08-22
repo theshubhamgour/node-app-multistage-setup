@@ -31,7 +31,7 @@ pipeline {
         stage('Docker Login') {
             steps {
                 script {
-                    sh "echo $DOCKERHUB_CREDENTIALS | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+                    sh "echo $DOCKERHUB_CREDENTIALS | docker login -u $DOCKERHUB_CREDENTIALS --password-stdin"
                 }
             }
         }
