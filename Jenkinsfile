@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         TAG_NAME = 'theshubhamgour/node'                 // Tag Name
-        APP_VERSION = 'nodeapp-master-v1.0.0'            // Version
+        APP_VERSION = 'nodeapp-pre-release-v1.0.0'            // Version
         DOCKER_REPO = "${TAG_NAME}"                      // Docker Repo
         DOCKER_TAG = "${APP_VERSION}"                    // Docker Tag
         // DOCKERHUB_CREDENTIALS = credentials('DOCKERHUB_CREDENTIALS') // Replace with your Jenkins credential ID
