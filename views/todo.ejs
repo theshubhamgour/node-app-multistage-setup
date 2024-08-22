@@ -1,35 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Todo List APP test</title>
+        <title>Node Web-App</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
+                background-color: #f0f2f5;
                 color: #333;
                 margin: 0;
                 padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+
+            .container {
+                background-color: white;
+                padding: 30px;
+                box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
+                width: 100%;
+                max-width: 500px;
             }
 
             h1 {
-                background-color: #4CAF50;
+                background-color: #020c13;
                 color: white;
-                margin: 0;
+                margin: -30px -30px 20px -30px;
                 padding: 20px;
                 text-align: center;
+                border-radius: 10px 10px 0 0;
             }
 
             ul {
                 list-style: none;
                 padding: 0;
+                margin: 0;
             }
 
             ul li {
                 background: #fff;
                 border: 1px solid #ddd;
                 margin-bottom: 10px;
-                padding: 10px;
+                padding: 15px;
+                border-radius: 5px;
                 position: relative;
+                transition: box-shadow 0.3s ease;
+            }
+
+            ul li:hover {
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             }
 
             ul li a {
@@ -39,7 +60,7 @@
             }
 
             ul li a:hover {
-                color: #4CAF50;
+                color: #020c13;
             }
 
             .delete-btn {
@@ -47,6 +68,7 @@
                 position: absolute;
                 right: 10px;
                 top: 10px;
+                cursor: pointer;
             }
 
             .edit-btn {
@@ -54,17 +76,21 @@
                 position: absolute;
                 right: 40px;
                 top: 10px;
+                cursor: pointer;
             }
 
             form {
-                background: #fff;
+                background: #f9f9f9;
                 padding: 20px;
                 margin-top: 20px;
+                border-radius: 5px;
+                border: 1px solid #ddd;
             }
 
             label {
                 display: block;
                 margin-bottom: 10px;
+                font-weight: bold;
             }
 
             input[type="text"] {
@@ -72,14 +98,17 @@
                 padding: 10px;
                 margin-bottom: 10px;
                 border: 1px solid #ddd;
+                border-radius: 5px;
             }
 
             input[type="submit"] {
-                background-color: #4CAF50;
+                background-color: #020c13;
                 color: white;
                 border: none;
                 padding: 10px 20px;
                 cursor: pointer;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
             }
 
             input[type="submit"]:hover {
@@ -89,23 +118,26 @@
     </head>
 
     <body>
-        <h1>Todo List - Made for Batch 7</h1>
-        <ul>
-            <% todolist.forEach(function(todo, index) { %>
-            <li>
-                <a href="/todo/delete/<%= index %>" class="delete-btn">✘</a>
-                <a href="/todo/<%= index %>" class="edit-btn">✎</a>
-                <%- todo %>
-            </li>
-            <% }); %>
-        </ul>
+        <div class="container">
+            <h1>Node Web Application</h1>
+            <ul>
+                <% todolist.forEach(function(todo, index) { %>
+                <li>
+                    <a href="/todo/delete/<%= index %>" class="delete-btn">✘</a>
+                    <a href="/todo/<%= index %>" class="edit-btn">✎</a>
+                    <%- todo %>
+                </li>
+                <% }); %>
+            </ul>
 
-        <form action="/todo/add/" method="post">
-            <p>
-                <label for="newtodo">What should I do?</label>
-                <input type="text" name="newtodo" id="newtodo" autofocus />
-                <input type="submit" value="Add" />
-            </p>
-        </form>
+            <form action="/todo/add/" method="post">
+                <p>
+                    <label for="newtodo">What should I do?</label>
+                    <input type="text" name="newtodo" id="newtodo" autofocus />
+                    <input type="submit" value="Add" />
+                </p>
+            </form>
+        </div>
     </body>
 </html>
+
