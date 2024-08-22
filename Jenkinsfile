@@ -6,7 +6,7 @@ pipeline {
         APP_VERSION = 'nodeapp-master-v1.0.0'            // Version
         DOCKER_REPO = "${TAG_NAME}"                      // Docker Repo
         DOCKER_TAG = "${APP_VERSION}"                    // Docker Tag
-        DOCKERHUB_CREDENTIALS = credentials('DOCKERHUB_CREDENTIALS') // Replace with your Jenkins credential ID
+        // DOCKERHUB_CREDENTIALS = credentials('DOCKERHUB_CREDENTIALS') // Replace with your Jenkins credential ID
     }
 
     stages {
@@ -30,9 +30,7 @@ pipeline {
 
         stage('Docker Login') {
             steps {
-                script {
-                    sh "echo $DOCKERHUB_CREDENTIALS | docker login -u $DOCKERHUB_CREDENTIALS --password-stdin"
-                }
+                sh 'docker login -u theshubhamgour -p redhat123#'
             }
         }
 
